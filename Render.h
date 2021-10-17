@@ -1,17 +1,50 @@
+#define WIN32_LEAN_AND_MEAN
+#define _WIN32_WINNT 0x0500
+#include <windows.h>
 #ifdef BUILD_DLL
 #define EXPORT __declspec(dllexport)
 #else
 #define EXPORT __declspec(dllimport)
 #endif
-
 /*
-  VERSION: Alpha 1.0.0: Lanzamiento.
+  VERSION: Alpha 2.0.0: Lanzamiento.
   20:16 Argentina Daniel Efrain Quiroga
   06:20 Mexicam Andres Ruiz perez
   06:36 Colombia Jheison Toro Betancourth
   -----------------------
   |16 de octubre de 2021|
   -----------------------
+
+  VERSION: Alpha 1.0.0: Lanzamiento.
+  [SE AGREGO]: version
+  [SE AGREGO]: iniciar
+  [SE AGREGO]: loopinit
+  [SE AGREGO]: pintar
+  [SE AGREGO]: salir
+  [SE AGREGO]: deltatime
+  [SE AGREGO]: mousex
+  [SE AGREGO]: mousey
+  [SE AGREGO]: izquierdo
+  [SE AGREGO]: derecho
+  [SE AGREGO]: tecla
+  [SE AGREGO]: pixel
+  [SE AGREGO]: getpixel
+  [SE AGREGO]: fondo
+  [SE AGREGO]: arrastre
+  [SE AGREGO]: raton_botones
+  [SE AGREGO]: comandomenu
+  [SE AGREGO]: comandomenu2
+  [SE AGREGO]: RGB
+  [SE AGREGO]: RGBA
+  [SE AGREGO]: GetAValue
+
+  VERSION: Alpha 2.0.0:
+  [SE AGREGO]: chars
+  [SE AGREGO]: fontsize
+  [SE AGREGO]: text
+  [SE AGREGO]: texto
+  [SE AGREGO]: modoconsola
+
 */
 
 
@@ -20,12 +53,10 @@
 //Codigo de ejemplo
 
 #include "render.h"
-#include <stdio.h>
 int main(void){
    iniciar( 500,500, "Test" );
    while( loopinit() ){
       if (tecla(27))break;
-      printf("%c\n", 1 );
       pintar( 10 );
    }
    salir();
@@ -36,6 +67,12 @@ int main(void){
 #include <stdbool.h>
 #include <stdint.h>
 
+
+enum MODO_DE_CONSOLA
+{
+    OCULTAR = 2,
+    NOOCULTAR = 4
+};
 
 
 struct tagInOut
@@ -60,9 +97,11 @@ typedef union tagRGBA
 
 
 #ifdef __cplusplus
+#ifdef FASTCALL
 #define FASTCALL __stdcall
 #else
 #define FASTCALL __fastcall
+#endif
 #endif
 
 /* VERSION HOY EN DIA DEL PROYECTO RENDER.H */
@@ -73,12 +112,18 @@ EXPORT int      FASTCALL loopinit( void ); /* DETECTA SI LA VENTANA/RENDER ESTA 
 EXPORT int      FASTCALL iniciar( int,int,const char* ); /* INICIA LA VENTANA/RENDER */
 EXPORT void     FASTCALL pintar( int ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER */
 EXPORT void     FASTCALL salir( void ); /* CANCELA LA VENTANA ELIMINA BUFFER Y SALE DEL RENDER */
-EXPORT float    FASTCALL deltatime( void ); /* DA EL VALOR DEL (RETARDO DEL DIBUJADO/DELTA TIME) */
+EXPORT float    FASTCALL deltatime( void ); /* DEVUELVE EL VALOR DEL (RETARDO DEL DIBUJADO/DELTA TIME) */
+/* CONFIGURACIONES */
+EXPORT void     FASTCALL modoconsola( int modo ); /* SETEA EL MODO DE VIZION DE LA CONSOLA CMD/SHEEL USANDO LAS ESPECIFICACIONES DEL ENUM DE MODO_DE_CONSOLA. USE EL FLAG -mwindows SI HAY PROBLEMAS CON LA FUNCIÓN */
 /* DIBUJADOS */
-EXPORT void     FASTCALL pixel( int, int, uint32_t ); /* PINTA UN PIXEL EN COORDENADAS Y COLOR ESPECIFICADO USANDO RGB Y RGBA */
-EXPORT uint32_t FASTCALL getpixel( int, int ); /* OBTIENE EL COLOR DEL PIXEL EN LAS COORDENADAS ESPECIFICADO */
-EXPORT void     FASTCALL borrar( void ); /* BORRA TODO EL DIBUJADO DEJA EN NEGRO/0 */
-EXPORT void     FASTCALL fondo( uint32_t ); /* RELLENA EL DIBUJADO CON EL COLOR ESPECIFICO USANDO RGB Y RGBA */
+EXPORT void     FASTCALL pixel( int, int, uint32_t ); /* PINTA UN PIXEL EN COORDENADAS Y COLOR ESPECIFICADO USANDO RGB O RGBA */
+EXPORT uint32_t FASTCALL getpixel( int, int ); /* OBTIENE EL COLOR DEL PIXEL EN LAS COORDENADAS ESPECIFICADAS */
+EXPORT void     FASTCALL borrar( void ); /* BORRA TODO EL DIBUJADO DEJA EN NEGRO/0. EL CANAL A/ALPHA ESTARA EN ALTO/255 */
+EXPORT void     FASTCALL fondo( uint32_t ); /* RELLENA EL DIBUJADO CON EL COLOR ESPECIFICO USANDO RGB O RGBA */
+EXPORT void     FASTCALL chars( int x, int y, const char ascii, uint32_t color ); /* DIBUJA UA FUENTE DE ASCII DE 8x8 EN SUS COORDENADAS ESPECIFICADAS Y ASCII STANDAR ESPECIFICADO Y COLOR USANDO RGB O RGBA */
+EXPORT void     FASTCALL fontsize( int w, int h ); /* SETEA EL TAMAÑO DE FUENTE EN ANCHO Y ALTO ESTAS NUMERACIONES QUEDAN PARA TODOS LOS DIBUJADOS DE TEXTOS */
+EXPORT void     FASTCALL text( int x, int y, uint32_t color, const char *texto ); /* DIBUJA UNA CADENA DE ASCII/TEXTOS CON SUS COORDENADAS ESPECIFICADAS Y COLOR USANDO RGB O RGBA */
+EXPORT void     FASTCALL texto( int x, int y, uint32_t color, const char *texto, ... ); /* DIBUJA UNA CADENA DE ASCII/TEXTOS CON FORMATOS COMO "PRITF", CON SUS COORDENAS ESPECIFICADAS Y COLOR USANDO RGB O RGBA */
 /* INPUTS Y UOTPUTS */
 EXPORT bool     FASTCALL tecla( char ); /* OBTIENE LAS TECLAS PRESIONADA */
 EXPORT int      FASTCALL mousex( void ); /* OBTIENE LA COORDENADA DEL PUNTERO MOUSE EN X DE TODA LA VENTANA */
