@@ -92,20 +92,6 @@ int main(void){
 }
 */
 
-#include <stdbool.h>
-#include <stdint.h>
-
-
-enum MODO_DE_CONSOLA{
-    OCULTAR = 2,
-    NOOCULTAR = 4
-};
-
-#define RGBA(r,g,b,a)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(a) << 24) )
-#undef RGB
-#define RGB(r,g,b)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(255) << 24) )
-#define GetAValue(rgb) (LOBYTE((rgb)>>24))
-
 
 
 #ifdef __cplusplus
@@ -122,6 +108,21 @@ enum MODO_DE_CONSOLA{
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef unsigned short  uint16_t;
+typedef unsigned   uint32_t;
+
+enum MODO_DE_CONSOLA{
+    OCULTAR = 2,
+    NOOCULTAR = 4
+};
+
+#define RGBA(r,g,b,a)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(a) << 24) )
+#undef RGB
+#define RGB(r,g,b)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(255) << 24) )
+#define GetAValue(rgb) (LOBYTE((rgb)>>24))
+
+
 
 #ifndef __POINT2D__
 #define __POINT2D__
@@ -165,15 +166,15 @@ EXPORT void     FASTCALL lineagr( int x0, int y0, int x1, int y1, uint32_t color
 EXPORT void     FASTCALL triangulogr( int x, int y, int x1, int y1, int x2, int y2, uint32_t colorA, uint32_t colorB, uint32_t colorC ); /* DIBUJA UN TRIANGULO GRADIENTE CON SUS COORDENADAS ESPECIFICADAS. Y EL COLOR VA DESDE EL COLOR A, LUEGO YEGAR AL COLOR B, LUEGO YEGAR AL COLOR C Y VOLVER AL COLOR DE A, SE LO LLAMA GRADIENTE DE COLOR */
 
 /* INPUTS Y OUTPUTS */
-EXPORT bool     FASTCALL tecla( char ); /* OBTIENE LAS TECLAS PRESIONADA */
+EXPORT _Bool     FASTCALL tecla( char ); /* OBTIENE LAS TECLAS PRESIONADA */
 EXPORT int      FASTCALL mousex( void ); /* OBTIENE LA COORDENADA DEL PUNTERO MOUSE EN X DE TODA LA VENTANA */
 EXPORT int      FASTCALL mousey( void ); /* OBTIENE LA COORDENADA DEL PUNTERO MOUSE EN Y DE TODA LA VENTANA */
-EXPORT bool     FASTCALL arrastre( void ); /* OBTIENE SI ESTA ARRASTRANDO CON EL PUNTERO MOUSE MANTENIÉNDOSE APRETADO */
-EXPORT void     FASTCALL raton_botones( bool *izq, bool *der ); /* OBTIENE EN MEMORIA DE TAL VARIABLE LOS BOTONES IZQUIERDO Y DERECHO DEL MOUSE */
-EXPORT bool     FASTCALL izquierdo( void ); /* OBTIENE LA PULSACION IZQUIERDO DEL MOUSE */
-EXPORT bool     FASTCALL derecho( void ); /* OBTIENE LA PULSACION DERECHO DEL MOUSE */
+EXPORT _Bool     FASTCALL arrastre( void ); /* OBTIENE SI ESTA ARRASTRANDO CON EL PUNTERO MOUSE MANTENIÉNDOSE APRETADO */
+EXPORT void     FASTCALL raton_botones( _Bool *izq, _Bool *der ); /* OBTIENE EN MEMORIA DE TAL VARIABLE LOS BOTONES IZQUIERDO Y DERECHO DEL MOUSE */
+EXPORT _Bool     FASTCALL izquierdo( void ); /* OBTIENE LA PULSACION IZQUIERDO DEL MOUSE */
+EXPORT _Bool     FASTCALL derecho( void ); /* OBTIENE LA PULSACION DERECHO DEL MOUSE */
 EXPORT int      FASTCALL comandomenu( void ); /* OBTIENE EL COMANDO AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
-EXPORT bool     FASTCALL comandomenu2( int ids ); /* OBTIENE UNA UNICA VEZ AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
+EXPORT _Bool     FASTCALL comandomenu2( int ids ); /* OBTIENE UNA UNICA VEZ AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
 
 #ifdef __cplusplus
     }
