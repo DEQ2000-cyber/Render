@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 1.0.0: Lanzamiento.
+    VERSION: Alpha 4.4.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -77,7 +77,12 @@
     [SE AGREGO]: SOLUCION DE FALLA DE FONDO AL PINTAR : POR DEQ PEDIDO POR JTB
 
     VERSION: Alpha 4.3.0:
-    [SE AGREGO]: 
+    [SE AGREGO]: modotimedelta : POR DEQ PEDIDO POR JTB
+
+    VERSION: Alpha 4.4.0:
+    [SE AGREGO]: poligon : POR DEQ
+    [SE AGREGO]: moveto : POR DEQ
+    [SE AGREGO]: lineato : POR DEQ
 */
 
 
@@ -117,9 +122,16 @@ extern "C" {
 #endif
 
 #include <stdbool.h>
+#include <stdint.h>
 
-typedef unsigned short  uint16_t;
-typedef unsigned   uint32_t;
+typedef uint16_t u16,U16;
+typedef uint32_t u32,U32;
+typedef int16_t i16,I16;
+typedef int32_t i32,I32;
+typedef int8_t i8,I8;
+typedef uint8_t u8,U8;
+typedef float F32,f32;
+
 
 enum MODO_DE_CONSOLA{
     OCULTAR = 2,
@@ -164,6 +176,8 @@ EXPORT void     FASTCALL text( int x, int y, uint32_t color, const char *texto )
 EXPORT void     FASTCALL texto( int x, int y, uint32_t color, const char *texto, ... ); /* DIBUJA UNA CADENA DE ASCII/TEXTOS CON FORMATOS COMO "PRITF", CON SUS COORDENAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL rectangulo( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UN RECTANGULO HUECO DE CUATRO PUNTOS ESPEFICICADOS Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL rectangulofill( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UN RECTANGULO RELLENO DE CUATRO PUNTOS ESPEFICICADOS Y COLOR USANDO RGB O RGBA */
+EXPORT void     FASTCALL moveto( int x, int y ); /* SETEA LAS COORDENADAS PRMARIAS USADAS PARA LINEATO */
+EXPORT void     FASTCALL lineato( int x, int y, uint32_t color ); /* DIBUJA UNA LINEA SEGUIDA POR COORDENADAS MOVETO, SETEADOS POR COORDENADAS ESPECIFICADAS Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL linea( int x0, int y0, int x1, int y1, uint32_t color ); /* DIBUJA UNA LINEA CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineaw( int x, int w, int y, uint32_t color ); /* DIBUJA UNA LINEA EN HORIZONTAL CON COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineah( int y, int h, int x, uint32_t color ); /* DIBUJA UNA LIENA EN VERTICAL CON SUS COORDENADA ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
@@ -171,6 +185,7 @@ EXPORT void     FASTCALL circulo( int ox, int oy, int radio, uint32_t color ); /
 EXPORT void     FASTCALL circulofill( int ox, int oy, int radio, uint32_t color ); /* DIBUJA UN CIRCULO RELLENO CON SUS COORDENADAS Y RADIO ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL triangulo( int x, int y, int x1, int y1, int x2, int y2, uint32_t color ); /* DIBUJA UN TRIANGULO HUECO CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL triangulofill( int X1, int Y1, int X2, int Y2, int X3, int Y3, uint32_t color ); /* DIBUJA UN TRIANGULO RELLENO CON SUS COORDENADAS ESPECIFICAS. Y COLOR USANDO RGB O RGBA */
+EXPORT void     FASTCALL polygon( uint32_t cantidad, PUNTOS p[], uint32_t color ); /* DIBUJA POLIGONOS HUECO CON SUS COORDENADAS ESPECIFICADAS. USANDO LA STRUCTURA PUNTOS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL polygonfill( uint32_t cantidad, PUNTOS p[], uint32_t color ); /* DIBUJA POLIGONOS RELLENOS CON SUS COORDENADAS ESPECIFICADAS. USANDO LA STRUCTURA PUNTOS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineagr( int x0, int y0, int x1, int y1, uint32_t colorA, uint32_t colorB ); /* DIBUJA UNA LINEA GRADIENTE CON SUS COORDENADAS ESPECIFICADAS. Y EL COLOR VA DESDE EL COLOR A, ASTA YEGAR AL COLOR B. SE LO LLAMA GRADIENTE DE COLOR */
 EXPORT void     FASTCALL triangulogr( int x, int y, int x1, int y1, int x2, int y2, uint32_t colorA, uint32_t colorB, uint32_t colorC ); /* DIBUJA UN TRIANGULO GRADIENTE CON SUS COORDENADAS ESPECIFICADAS. Y EL COLOR VA DESDE EL COLOR A, LUEGO YEGAR AL COLOR B, LUEGO YEGAR AL COLOR C Y VOLVER AL COLOR DE A, SE LO LLAMA GRADIENTE DE COLOR */
