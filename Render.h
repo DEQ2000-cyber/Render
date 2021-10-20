@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 4.4.0.
+    VERSION: Alpha 4.5.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -83,6 +83,9 @@
     [SE AGREGO]: poligon : POR DEQ
     [SE AGREGO]: moveto : POR DEQ
     [SE AGREGO]: lineato : POR DEQ
+
+    VERSION: Alpha 4.5.0:
+    [SE AGREGO]: SOLUCION DE RECTANGULOFILL AL PINTAR : POR DEQ PEDIDO POR JTB
 */
 
 
