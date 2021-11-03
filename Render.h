@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 4.6.0.
+    VERSION: Alpha 4.8.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -93,9 +93,10 @@
     VERSION: Alpha 4.7.0.
     [SE AGREGO]: linearc : POR DEQ
     [SE AGREGO]: SOLUCION DE FALLA DE lineato : POR JTB 
-
-    VERSION: Alpha 4.8.0
     [SE AGREGO]: SOLUCION DE FALLA DE cuadricula : POR JTB
+
+    VERSION: Alpha 4.8.0.
+    [SE AGREGO]: linearc : SOLUCION DE MAL PUNTOS DE A HACIA B. POR DEQ
 
 */
 
@@ -205,6 +206,7 @@ EXPORT void     FASTCALL lineagr( int x0, int y0, int x1, int y1, uint32_t color
 EXPORT void     FASTCALL triangulogr( int x, int y, int x1, int y1, int x2, int y2, uint32_t colorA, uint32_t colorB, uint32_t colorC ); /* DIBUJA UN TRIANGULO GRADIENTE CON SUS COORDENADAS ESPECIFICADAS. Y EL COLOR VA DESDE EL COLOR A, LUEGO YEGAR AL COLOR B, LUEGO YEGAR AL COLOR C Y VOLVER AL COLOR DE A, SE LO LLAMA GRADIENTE DE COLOR */
 EXPORT void     FASTCALL cuadricula( int itilesx, int itilesy, uint32_t color ); /* DIBUJA UNA CUADRICULA CON TODO EL RENDER/SCREEN CON SEPARAMIENTOS ESPECIFICADOS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineanorm( int x1, int y1, int x2, int y2, uint32_t color ); /* DIBUJA UNA LINEA NORMALIZADA POR VECTORES CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
+EXPORT void     FASTCALL linearc( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UNA LINEA MEDIANTE RECORTE CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 
 /* INPUTS Y OUTPUTS */
 EXPORT _Bool     FASTCALL tecla( char ); /* OBTIENE LAS TECLAS PRESIONADA */
