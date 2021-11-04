@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 4.8.0.
+    VERSION: Alpha 5.8.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -96,7 +96,11 @@
     [SE AGREGO]: SOLUCION DE FALLA DE cuadricula : POR JTB
 
     VERSION: Alpha 4.8.0.
-    [SE AGREGO]: linearc : SOLUCION DE MAL PUNTOS DE A HACIA B. POR DEQ
+    [SE AGREGO]: linearc : SOLUCION DE MAL PUNTOS DE A HACIA B. : POR DEQ
+
+    VERSION: Alpha 5.8.0.
+    [SE AGREGO]: linearc : SOLUCION DE MAL NINGUN Y MAL GRADIENTE PARA EL CANAL A/ALPHA DE COLOR : POR DEQ
+    [SE AGREGO]: SE CAMBIO LA FORMA DE OBTENER LOS CLICKS DEL MOUSE/RATON, AHORA TIENEN PARAMETROS DEL MODO DE RETORNO. (SOSTENIDO) Y (UNAVEZ)
 
 */
 
@@ -139,18 +143,23 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
-typedef uint16_t u16,U16;
-typedef uint32_t u32,U32;
-typedef int16_t i16,I16;
-typedef int32_t i32,I32;
-typedef int8_t i8,I8;
-typedef uint8_t u8,U8;
-typedef float F32,f32;
+typedef uint16_t    u16,    U16;
+typedef uint32_t    u32,    U32;
+typedef int16_t     i16,    I16;
+typedef int32_t     i32,    I32;
+typedef int8_t      i8,     I8;
+typedef uint8_t     u8,     U8;
+typedef float       f32,    F32;
 
 
 enum MODO_DE_CONSOLA{
-    OCULTAR = 2,
-    NOOCULTAR = 4
+    OCULTAR     =   2,
+    NOOCULTAR   =   4
+};
+
+enum ConfigMouse{
+    SOSTENIDO   =   2,
+    UNAVEZ      =   4
 };
 
 #define RGBA(r,g,b,a)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(a) << 24) )
@@ -177,9 +186,11 @@ EXPORT int      FASTCALL iniciar( int,int,const char* ); /* INICIA LA VENTANA/RE
 EXPORT void     FASTCALL pintar( int ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER */
 EXPORT void     FASTCALL salir( void ); /* CANCELA LA VENTANA ELIMINA BUFFER Y SALE DEL RENDER */
 EXPORT float    FASTCALL deltatime( void ); /* DEVUELVE EL VALOR DEL (RETARDO DEL DIBUJADO/DELTA TIME) */
+
 /* CONFIGURACIONES */
 EXPORT void     FASTCALL modoconsola( int modo ); /* SETEA EL MODO DE VIZION DE LA CONSOLA CMD/SHEEL USANDO LAS ESPECIFICACIONES DEL ENUM DE MODO_DE_CONSOLA. USE EL FLAG -mwindows SI HAY PROBLEMAS CON LA FUNCIÓN */
 EXPORT void     FASTCALL modotimedelta( int modo ); /* SETEA EL MODO DE VIZION DEL TITULO VENTANA LAS ESPECIFICACIONES DEL ENUM DE MODO_DE_CONSOLA. USE EL FLAG */
+
 /* DIBUJADOS */
 EXPORT void     FASTCALL pixel( int, int, uint32_t ); /* PINTA UN PIXEL EN COORDENADAS Y COLOR ESPECIFICADO USANDO RGB O RGBA */
 EXPORT uint32_t FASTCALL getpixel( int, int ); /* OBTIENE EL COLOR DEL PIXEL EN LAS COORDENADAS ESPECIFICADAS. */
@@ -214,8 +225,8 @@ EXPORT int      FASTCALL mousex( void ); /* OBTIENE LA COORDENADA DEL PUNTERO MO
 EXPORT int      FASTCALL mousey( void ); /* OBTIENE LA COORDENADA DEL PUNTERO MOUSE EN Y DE TODA LA VENTANA */
 EXPORT _Bool     FASTCALL arrastre( void ); /* OBTIENE SI ESTA ARRASTRANDO CON EL PUNTERO MOUSE MANTENIÉNDOSE APRETADO */
 EXPORT void     FASTCALL raton_botones( _Bool *izq, _Bool *der ); /* OBTIENE EN MEMORIA DE TAL VARIABLE LOS BOTONES IZQUIERDO Y DERECHO DEL MOUSE */
-EXPORT _Bool     FASTCALL izquierdo( void ); /* OBTIENE LA PULSACION IZQUIERDO DEL MOUSE */
-EXPORT _Bool     FASTCALL derecho( void ); /* OBTIENE LA PULSACION DERECHO DEL MOUSE */
+EXPORT _Bool     FASTCALL izquierdo( int mode ); /* OBTIENE LA PULSACION IZQUIERDO DEL MOUSE. SU MODO DE RESPUESTA USANDO LAS ESPECIFICACIONES DEL ENUM DE ConfigMouse */
+EXPORT _Bool     FASTCALL derecho( int mode ); /* OBTIENE LA PULSACION DERECHO DEL MOUSE. SU MODO DE RESPUESTA USANDO LAS ESPECIFICACIONES DEL ENUM DE ConfigMouse */
 EXPORT int      FASTCALL comandomenu( void ); /* OBTIENE EL COMANDO AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
 EXPORT _Bool     FASTCALL comandomenu2( int ids ); /* OBTIENE UNA UNICA VEZ AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
 
