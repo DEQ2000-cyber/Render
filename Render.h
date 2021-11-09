@@ -99,11 +99,13 @@
     [SE AGREGO]: linearc : SOLUCION DE MAL PUNTOS DE A HACIA B. : POR DEQ
 
     VERSION: Alpha 5.8.0.
-    [SE AGREGO]: linearc : SOLUCION DE MAL FORMACION ENTRE DOS PUNTOS, Y MAL GRADIENTE PARA EL CANAL A/ALPHA DE COLOR : POR DEQ
+    [SE AGREGO]: linearc : SOLUCION DE MAL NINGUN Y MAL GRADIENTE PARA EL CANAL A/ALPHA DE COLOR : POR DEQ
     [SE AGREGO]: SE CAMBIO LA FORMA DE OBTENER LOS CLICKS DEL MOUSE/RATON, AHORA TIENEN PARAMETROS DEL MODO DE RETORNO. (SOSTENIDO) Y (UNAVEZ)
 
     VERSION: Alpha 6.8.0.
-    [SE AGREGO]: triangulofillgr : POR DEQ
+    [SE aGREGO]: abrirfichero : POR DEQ PEDIDO POR JTB
+    [SE aGREGO]: abrirficherof : POR DEQ PEDIDO POR JTB
+
 */
 
 
@@ -136,6 +138,14 @@ int main(void){
 #define FASTCALL __fastcall
 #endif
 #endif
+
+
+/* ARCHIVOMODE */
+#define ORB "rb" // OpenReadBynari
+#define ORN "r"  // OpenReadNormal
+#define OWB "wb" // OpenWriteBynari
+#define OWN "w"  // OpenWriteNormal
+
 
 
 #ifdef __cplusplus
@@ -220,7 +230,6 @@ EXPORT void     FASTCALL triangulogr( int x, int y, int x1, int y1, int x2, int 
 EXPORT void     FASTCALL cuadricula( int itilesx, int itilesy, uint32_t color ); /* DIBUJA UNA CUADRICULA CON TODO EL RENDER/SCREEN CON SEPARAMIENTOS ESPECIFICADOS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineanorm( int x1, int y1, int x2, int y2, uint32_t color ); /* DIBUJA UNA LINEA NORMALIZADA POR VECTORES CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL linearc( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UNA LINEA MEDIANTE RECORTE CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
-EXPORT void     FASTCALL triangulofillgr( int x1, int y1, int x2, int y2, int x3, int y3, uint32_t colorA, uint32_t colorB, uint32_t colorC ); /* DIBUJA UN TRIANGULO RELLENO CON GRADIENTE DE TRES COLORES ESPECIFIcADOS. Y COLOR USANDO RGB O RGBA */
 
 /* INPUTS Y OUTPUTS */
 EXPORT _Bool    FASTCALL tecla( char ); /* OBTIENE LAS TECLAS PRESIONADA */
@@ -232,6 +241,11 @@ EXPORT _Bool    FASTCALL izquierdo( int mode ); /* OBTIENE LA PULSACION IZQUIERD
 EXPORT _Bool    FASTCALL derecho( int mode ); /* OBTIENE LA PULSACION DERECHO DEL MOUSE. SU MODO DE RESPUESTA USANDO LAS ESPECIFICACIONES DEL ENUM DE ConfigMouse */
 EXPORT int      FASTCALL comandomenu( void ); /* OBTIENE EL COMANDO AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
 EXPORT _Bool    FASTCALL comandomenu2( int ids ); /* OBTIENE UNA UNICA VEZ AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
+EXPORT char*    FASTCALL abrirfichero( void ); /* OBTIENE UNA APERTURA HACIA LOS FICHEROS PARA ELEJIR Y RETORNA SU RUTA */
+#include <stdio.h>
+#ifdef _INC_STDIO
+EXPORT FILE*    FASTCALL abrirficherof( const char ModoDeAperturaFile[] ); /* OBTIENE UNA APERTURA HACIA LOS ARCHIVOS PARA ELEJIR Y RETORNA UN PUNTERO FILE. SE PUEDE ELEJIR EL MODO DE APERTURA USANDOLOS DEFINES DE ARCHIVOMODE */
+#endif
 
 #ifdef __cplusplus
     }
