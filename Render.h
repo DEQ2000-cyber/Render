@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 6.8.0.
+    VERSION: Alpha 6.9.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -108,12 +108,22 @@
     [SE AGREGO]: RGBpicker : POR DEQ
     [SE AGREGO]: modoventana : POR DEQ PEDIDO POR JTB
 
+    VERSION Alpha 6.9.0
+    [SE AGREGO]: ancho : POR DEQ
+    [SE AGREGO]: alto : POR DEQ
+    [SE AGREGO]: DATABGRA : POR DEQ
+
 */
 
 
 
+
+
+
+
+/* Codigo de ejemplo */
+
 /*
-//Codigo de ejemplo
 
 #include "render.h"
 #include <stdlib.h>
@@ -127,7 +137,9 @@ int main(void){
    salir();
    return (0);
 }
+
 */
+
 
 
 
@@ -190,16 +202,36 @@ enum MODO_DE_MOUSE{
 
 
 
+/* Strutura a color rgba separando los colores/canales en bytes */
+typedef union tagRGBA{
+    uint32_t rgba;
+    struct{ uint8_t B,G,R,A; };
+} __COLORS__;
+
+
+
+
 #ifndef __POINT2D__
 #define __POINT2D__
+/* Strutura a puntos 2D en floats */
 typedef struct tagPUNTOS
 {
     float x,y;
 } PUNTOS;
 #endif
 
+
+
+
+
 /* VERSION HOY EN DIA DEL PROYECTO RENDER.H */
 EXPORT void VERSION( void );
+
+
+
+/* EXTRAS */
+EXPORT uint32_t*FASTCALL DATABGRA( void ); /* OBTIENE EL PUNTERO DATA BGRA DEL SCREEN/DIBUJADO */
+
 
 /* INICIOS */
 EXPORT int      FASTCALL loopinit( void ); /* DETECTA SI LA VENTANA/RENDER ESTA YA ACTIVADA */
@@ -241,6 +273,10 @@ EXPORT void     FASTCALL cuadricula( int itilesx, int itilesy, uint32_t color );
 EXPORT void     FASTCALL lineanorm( int x1, int y1, int x2, int y2, uint32_t color ); /* DIBUJA UNA LINEA NORMALIZADA POR VECTORES CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL linearc( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UNA LINEA MEDIANTE RECORTE CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 /* INPUTS Y OUTPUTS */
+EXPORT int      FASTCALL anchov( void ); /* OBTIENE EL ANCHO DE LA VENTANA. */
+EXPORT int      FASTCALL altov( void ); /* OBTIENE EL ALTO DE LA VENTANA. */
+EXPORT int      FASTCALL ancho( void ); /* OBTIENE EL ANCHO DEL SCREEN/DIBUJADO. */
+EXPORT int      FASTCALL alto( void ); /* OBTIENE EL ALTO DEL SCREEN/DIBUJADO. */
 EXPORT _Bool    FASTCALL tecla( char ); /* OBTIENE LAS TECLAS PRESIONADA */
 EXPORT int      FASTCALL mousex( void ); /* OBTIENE LA COORDENADA DEL PUNTERO MOUSE EN X DE TODA LA VENTANA */
 EXPORT int      FASTCALL mousey( void ); /* OBTIENE LA COORDENADA DEL PUNTERO MOUSE EN Y DE TODA LA VENTANA */
