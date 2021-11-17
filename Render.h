@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 6.9.0.
+    VERSION: Alpha 7.9.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -40,9 +40,9 @@
     [SE AGREGO]: raton_botones : POR DEQ
     [SE AGREGO]: comandomenu : POR DEQ
     [SE AGREGO]: comandomenu2 : POR DEQ
-    [SE AGREGO]: RGB : POR DEQ
-    [SE AGREGO]: RGBA : POR DEQ
-    [SE AGREGO]: GetAValue : POR DEQ
+    [SE AGREGO]: RGB : POR DEQ -> Eliminado
+    [SE AGREGO]: RGBA : POR DEQ -> Eliminado
+    [SE AGREGO]: GetAValue : POR DEQ -> Eliminado
 
     VERSION: Alpha 2.0.0:
     [SE AGREGO]: chars : POR DEQ
@@ -112,6 +112,12 @@
     [SE AGREGO]: ancho : POR DEQ
     [SE AGREGO]: alto : POR DEQ
     [SE AGREGO]: DATABGRA : POR DEQ
+    [SE AGREGO]: colorRGB : POR DEQ
+    [SE AGREGO]: colorRGBA : POR DEQ
+    [SE AGREGO]: pixelp : POR DEQ
+
+    VERSION Alpha 7.9.0
+    [SE AGREGO]: fondoimagen : POR DEQ
 
 */
 
@@ -209,6 +215,12 @@ typedef union tagRGBA{
 } __COLORS__;
 
 
+/* Structura a color rgba separando los colores/canales en bytes, y activado de transparencia */
+typedef struct tagColorRGBA
+{
+    uint8_t B,G,R,A;
+    _Bool alpha;
+} ColorRGBA, *PColorRGBA;
 
 
 #ifndef __POINT2D__
@@ -230,7 +242,10 @@ EXPORT void VERSION( void );
 
 
 /* EXTRAS */
-EXPORT uint32_t*FASTCALL DATABGRA( void ); /* OBTIENE EL PUNTERO DATA BGRA DEL SCREEN/DIBUJADO */
+EXPORT uint32_t*  FASTCALL DATABGRA( void ); /* OBTIENE EL PUNTERO DATA BGRA DEL SCREEN/DIBUJADO */
+EXPORT PColorRGBA FASTCALL colorRGB( uint8_t R, uint8_t G, uint8_t B ); /* RETORNA/CREA UN COLOR ESPECFICADO DE 0 A 255 EN CADA CANAL/PIGMENTO RGB */
+EXPORT PColorRGBA FASTCALL colorRGBA( uint8_t R, uint8_t G, uint8_t B, uint8_t A ); /* RETORNA/CREA UN COLOR ESPECFICADO DE 0 A 255 EN CADA CANAL/PIGMENTO RGB Y TRANSPARENCIA CON A */
+EXPORT void       FASTCALL fondoimagen( const char *nombre ); /* DIBUJA UNA IMAGEN PARA EL FONDO. PASANDOLE POR PARAMETRO EL NOMBRE/RUTA DE LA IMAGEN, ESTE LO LEERA Y DIBUJADA SU LECTURA SERA UNICA VEZ NO SERA UNICA ASTA QUE LA IMAGEN SEA OTRO NOMBRE */
 
 
 /* INICIOS */
@@ -272,6 +287,7 @@ EXPORT void     FASTCALL triangulogr( int x, int y, int x1, int y1, int x2, int 
 EXPORT void     FASTCALL cuadricula( int itilesx, int itilesy, uint32_t color ); /* DIBUJA UNA CUADRICULA CON TODO EL RENDER/SCREEN CON SEPARAMIENTOS ESPECIFICADOS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineanorm( int x1, int y1, int x2, int y2, uint32_t color ); /* DIBUJA UNA LINEA NORMALIZADA POR VECTORES CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL linearc( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UNA LINEA MEDIANTE RECORTE CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
+EXPORT uint32_t FASTCALL pixelp( PUNTOS P, void* colore ); /* DIBUJA UN PIXEL EL COORDENADAS STRUCTURA PUNTOS ESPECIFICADAS. Y COLOR USANDO colorRGB O colorRGBA. SI EL COLOR ES NULL RETORNA EL COLOR EN LAS COORDENADAS ESPECIFICADAS. FUNCIONA COMO GETPIXEL */
 /* INPUTS Y OUTPUTS */
 EXPORT int      FASTCALL anchov( void ); /* OBTIENE EL ANCHO DE LA VENTANA. */
 EXPORT int      FASTCALL altov( void ); /* OBTIENE EL ALTO DE LA VENTANA. */
