@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 7.9.0.
+    VERSION: Alpha 8.9.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -118,6 +118,13 @@
 
     VERSION Alpha 7.9.0
     [SE AGREGO]: fondoimagen : POR DEQ
+    [SE AGREGO]: triangulofillgr : POR DEQ
+
+    VERSION: Alpha 8.9.0
+    [SE AGREGO]: cargarimagen : POR DEQ
+    [SE AGREGO]: pintarimagen : POR DEQ
+    [SE AGREGO]: pintarimagenr : POR DEQ
+    [SE AGREGO]: borrarimagen : POR DEQ
 
 */
 
@@ -203,6 +210,7 @@ enum MODO_DE_MOUSE{
 
 enum MODO_FONDOIMG
 {
+    NORMAL      =   0,
     ESTRECHAR   =   2,
     MOSAICO     =   4
 };
@@ -242,6 +250,20 @@ typedef struct tagPUNTOS
 
 
 
+
+/* Structura a IMAGEN */
+
+typedef struct tagIMAGEN{
+    uint32_t ID, /* ID de la imagen para usos del render y configuraciones aptas. */
+        W,WS, /* Ancho iamgen, y ancho dividido en 2 para centro. */
+        H,HS, /*  Alto iamgen, y alto  dividido en 2 para centro. */
+        BPP;  /* El byte por separaciones del pixel de la imagen siempre 4, para usos del render y configuraciones aptas. */
+    uint32_t *DATA; /* Datos del color de la imagen/pixeles */
+}IMAGEN,*PIMAGEN; /* Typos: 1) structura normal, 2) structura puntero */
+
+
+
+
 /* VERSION HOY EN DIA DEL PROYECTO RENDER.H */
 EXPORT void VERSION( void );
 
@@ -252,7 +274,10 @@ EXPORT uint32_t*  FASTCALL DATABGRA( void ); /* OBTIENE EL PUNTERO DATA BGRA DEL
 EXPORT PColorRGBA FASTCALL colorRGB( uint8_t R, uint8_t G, uint8_t B ); /* RETORNA/CREA UN COLOR ESPECFICADO DE 0 A 255 EN CADA CANAL/PIGMENTO RGB */
 EXPORT PColorRGBA FASTCALL colorRGBA( uint8_t R, uint8_t G, uint8_t B, uint8_t A ); /* RETORNA/CREA UN COLOR ESPECFICADO DE 0 A 255 EN CADA CANAL/PIGMENTO RGB Y TRANSPARENCIA CON A */
 EXPORT void       FASTCALL fondoimagen( const char *nombre, int modo ); /* DIBUJA UNA IMAGEN PARA EL FONDO. PASANDOLE POR PARAMETRO EL NOMBRE/RUTA DE LA IMAGEN, ESTE LO LEERA Y DIBUJADA SU LECTURA SERA UNICA VEZ, NO SERA UNICA ASTA QUE LA IMAGEN SEA OTRO NOMBRE O OTRO MODO. USE LOS MODOS DE DIBUJADOS CON MODO_FONDOIMG */
-
+EXPORT void       FASTCALL cargarimagen( const char *nombre, IMAGEN *SPR ); /* CARGA UNA IMAGEN. PARAMETRO DE NOMBRE, Y EL TYPO STRUCTURA PUNTERO IMAGEN */
+EXPORT void       FASTCALL pintarimagen( int x, int y, IMAGEN *SPR ); /* DIBUJA LA IMAGEN CENTRADA CON SUS COORDENASA ESPECIFICADAS Y EL TYPO STRUCTURA PUNTERO IMAGEN */
+EXPORT void       FASTCALL pintarimagenr( int x, int y, int w, int h, IMAGEN *SPR ); /* DIBUJA LA IMAGEN CENTRADA CON SUS COORDENASA ESPECIFICADAS,TAMAÑO ESPECIFICADOS Y EL TYPO STRUCTURA PUNTERO IMAGEN */
+EXPORT void       FASTCALL borrarimagen( IMAGEN *SPR ); /* LIBERA LA IMAGEN DE LA MEMORIA. PASANDOLE EL TYPO STRUCTURA PUNTERO IMAGEN */
 
 /* INICIOS */
 EXPORT int      FASTCALL loopinit( void ); /* DETECTA SI LA VENTANA/RENDER ESTA YA ACTIVADA */
@@ -290,6 +315,7 @@ EXPORT void     FASTCALL polygon( uint32_t cantidad, PUNTOS p[], uint32_t color 
 EXPORT void     FASTCALL polygonfill( uint32_t cantidad, PUNTOS p[], uint32_t color ); /* DIBUJA POLIGONOS RELLENOS CON SUS COORDENADAS ESPECIFICADAS. USANDO LA STRUCTURA PUNTOS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineagr( int x0, int y0, int x1, int y1, uint32_t colorA, uint32_t colorB ); /* DIBUJA UNA LINEA GRADIENTE CON SUS COORDENADAS ESPECIFICADAS. Y EL COLOR VA DESDE EL COLOR A, ASTA YEGAR AL COLOR B. SE LO LLAMA GRADIENTE DE COLOR */
 EXPORT void     FASTCALL triangulogr( int x, int y, int x1, int y1, int x2, int y2, uint32_t colorA, uint32_t colorB, uint32_t colorC ); /* DIBUJA UN TRIANGULO GRADIENTE CON SUS COORDENADAS ESPECIFICADAS. Y EL COLOR VA DESDE EL COLOR A, LUEGO YEGAR AL COLOR B, LUEGO YEGAR AL COLOR C Y VOLVER AL COLOR DE A, SE LO LLAMA GRADIENTE DE COLOR */
+EXPORT void     FASTCALL triangulofillgr( int x1, int y1, int x2, int y2, int x3, int y3, uint32_t colorA, uint32_t colorB, uint32_t colorC ); /*  DIBUJA UN TRIANGULO RELLENO GRADIENTE CON SUS COORDENADAS ESPECIFICADAS. Y EL COLOR VA DESDE EL COLOR A, LUEGO YEGAR AL COLOR B, LUEGO YEGAR AL COLOR C Y VOLVER AL COLOR DE A, SE LO LLAMA GRADIENTE DE COLOR */
 EXPORT void     FASTCALL cuadricula( int itilesx, int itilesy, uint32_t color ); /* DIBUJA UNA CUADRICULA CON TODO EL RENDER/SCREEN CON SEPARAMIENTOS ESPECIFICADOS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineanorm( int x1, int y1, int x2, int y2, uint32_t color ); /* DIBUJA UNA LINEA NORMALIZADA POR VECTORES CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL linearc( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UNA LINEA MEDIANTE RECORTE CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
