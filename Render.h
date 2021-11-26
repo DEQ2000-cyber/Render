@@ -132,6 +132,10 @@
     [SE AGREGO]: borrarimagenes : POR DEQ
     [SE AGREGO]: efectoimagen : POR DEQ
     [SE AGREGO]: SE ISO UN CAMBIO CON. chars, texto, text : SE AGREGO COLOR DEL FONDO DE LA FUENTE : POR DEQ
+    [SE AGRAGO]: lineawgr : POR JTB
+    [SE AGRAGO]: lineahgr : POR JTB
+    [SE AGREGO]: rectangulofillgr : POR JTB
+    [SE AGREGO]: copiarbufferimagen : POR DEQ
     
 
 */
@@ -223,6 +227,9 @@ enum MODO_FONDOIMG
     MOSAICO     =   4
 };
 
+
+
+
 #define RGBA(r,g,b,a)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(a) << 24) )
 #undef RGB
 #define RGB(r,g,b)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(255) << 24) )
@@ -258,6 +265,22 @@ typedef struct tagPUNTOS
 
 
 
+enum __EFECTOS_IMAGEN__
+{
+    SCALA_ROJO      = 0,    SCALE_RED      = 0,
+    SCALA_VERDE     = 1,    SCALE_GREEN    = 1,
+    SCALA_AZUL      = 2,    SCALE_BLUE     = 2,
+    SCALA_ALPHA     = 4,    SCALE_ALFA     = 4,
+    SCALA_GRIS      = 8,    SCALE_GRAY     = 8,
+    INVERTIR        = 16,   INVERT         = 16,
+    VOLTEAR_V       = 32,   FLIP_V         = 32,
+    VOLTEAR_H       = 64,   FLIP_H         = 64,
+    DIFUMINAR       = 128,  BLUR           = 128
+
+};
+
+
+
 
 /* Structura a IMAGEN */
 
@@ -287,7 +310,8 @@ EXPORT void       FASTCALL pintarimagen( int x, int y, IMAGEN *SPR ); /* DIBUJA 
 EXPORT void       FASTCALL pintarimagenr( int x, int y, int w, int h, IMAGEN *SPR ); /* DIBUJA LA IMAGEN CENTRADA CON SUS COORDENASA ESPECIFICADAS,TAMAÑO ESPECIFICADOS Y EL TYPO STRUCTURA PUNTERO IMAGEN */
 EXPORT void       FASTCALL borrarimagen( IMAGEN *SPR ); /* LIBERA LA IMAGEN DE LA MEMORIA. PASANDOLE EL TYPO STRUCTURA PUNTERO IMAGEN. ES OPCIONAL LLAMARLA SE LIEBRAN SOLAS AL CERRAR EJECUTABLE */
 EXPORT void       FASTCALL borrarimagenes( void ); /* LIBERA LAS IMAGENES DE LA MEMORIA, A TODAS', ES OPCIONAL LLAMARLA SE LIEBRAN SOLAS AL CERRAR EJECUTABLE, LLAMELA POR PROTECCIÓN */
-EXPORT void       FASTCALL efectoimagen( unsigned int modo, IMAGEN *SPR ); /* INSERTA EFECTO A LA IMAGEN ESPECIFICANDOLE EL EFECTO */
+EXPORT void       FASTCALL efectoimagen( unsigned int modo, IMAGEN *SPR ); /* INSERTA EFECTO A LA IMAGEN ESPECIFICANDOLE EL EFECTO, CON LA STRUCTURA __EFECTOS_IMAGEN__ */
+EXPORT IMAGEN     FASTCALL copiarbufferimagen( IMAGEN *SPR ); /* RETORNA LA COPIA DEL BUFFER PASADO POR EL ARGUMENTO */
 
 /* INICIOS */
 EXPORT int      FASTCALL loopinit( void ); /* DETECTA SI LA VENTANA/RENDER ESTA YA ACTIVADA */
@@ -331,6 +355,9 @@ EXPORT void     FASTCALL lineanorm( int x1, int y1, int x2, int y2, uint32_t col
 EXPORT void     FASTCALL linearc( int x, int y, int w, int h, uint32_t color ); /* DIBUJA UNA LINEA MEDIANTE RECORTE CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT uint32_t FASTCALL pixelp( PUNTOS P, void* colore ); /* DIBUJA UN PIXEL EL COORDENADAS STRUCTURA PUNTOS ESPECIFICADAS. Y COLOR USANDO colorRGB O colorRGBA. SI EL COLOR ES NULL RETORNA EL COLOR EN LAS COORDENADAS ESPECIFICADAS. FUNCIONA COMO GETPIXEL */
 EXPORT void     FASTCALL triangulofillgrp( PUNTOS P[3], uint32_t colorA, uint32_t colorB, uint32_t colorC); /* DIBUJA UN TRIANGULO RELLENO GRADIENTE CON SUS COORDENADAS ESPECIFICADAS CON LA STRUCTURA PUNTOS. Y EL COLOR VA DESDE EL COLOR A, LUEGO YEGAR AL COLOR B, LUEGO YEGAR AL COLOR C Y VOLVER AL COLOR DE A, SE LO LLAMA GRADIENTE DE COLOR */
+EXPORT void     FASTCALL lineawgr( int x, int w, int y, uint32_t color1, uint32_t color2); /* DIBUJA UNA LÍNEA HORIZONTAL GRADIANTE DE 2 COLORES */
+EXPORT void     FASTCALL lineahgr( int x, int w, int y, uint32_t color1, uint32_t color2); /* DIBUJA UNA LÍNEA VERTICAL GRADIANTE DE 2 COLORES */
+EXPORT void     FASTCALL rectangulofillgr( int x, int y, int w, int h, uint32_t color1, uint32_t color2, uint32_t color3, uint32_t color4  ); /* DIBUJA UN RECTÁNGULO GRADIANTE CON 4 COLORES EN CADA ESQUINA */
 
 /* INPUTS Y OUTPUTS */
 EXPORT int      FASTCALL anchov( void ); /* OBTIENE EL ANCHO DE LA VENTANA. */
