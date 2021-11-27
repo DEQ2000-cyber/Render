@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 8.10.0.
+    VERSION: Alpha 8.11.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -137,6 +137,10 @@
     [SE AGREGO]: rectangulofillgr : POR JTB
     [SE AGREGO]: copiarbufferimagen : POR DEQ
     
+    VERSION Alpha 8.11.0
+    [SE AGREGO]: pixelimagen : POR DEQ PEIDO POR JTB
+    [SE AGREGO]: getpixelimagen : POR DEQ PEIDO POR JTB
+    [SE AGREGO]: rectangulogr : POR DEQ
 
 */
 
@@ -312,6 +316,8 @@ EXPORT void       FASTCALL borrarimagen( IMAGEN *SPR ); /* LIBERA LA IMAGEN DE L
 EXPORT void       FASTCALL borrarimagenes( void ); /* LIBERA LAS IMAGENES DE LA MEMORIA, A TODAS', ES OPCIONAL LLAMARLA SE LIEBRAN SOLAS AL CERRAR EJECUTABLE, LLAMELA POR PROTECCIÓN */
 EXPORT void       FASTCALL efectoimagen( unsigned int modo, IMAGEN *SPR ); /* INSERTA EFECTO A LA IMAGEN ESPECIFICANDOLE EL EFECTO, CON LA STRUCTURA __EFECTOS_IMAGEN__ */
 EXPORT IMAGEN     FASTCALL copiarbufferimagen( IMAGEN *SPR ); /* RETORNA LA COPIA DEL BUFFER PASADO POR EL ARGUMENTO */
+EXPORT void       FASTCALL pixelimagen( int x, int y, uint32_t color, IMAGEN *SPR ); /* PINTA UN PIXEL EN COORDENADAS Y COLOR ESPECIFICADO USANDO RGB O RGBA DE LA IMAGEN */
+EXPORT uint32_t   FASTCALL getpixelimagen( int x, int y, IMAGEN *SPR ); /* OBTIENE EL COLOR DEL PIXEL EN LAS COORDENADAS ESPECIFICADAS. DE LA IMAGEN */
 
 /* INICIOS */
 EXPORT int      FASTCALL loopinit( void ); /* DETECTA SI LA VENTANA/RENDER ESTA YA ACTIVADA */
@@ -357,7 +363,8 @@ EXPORT uint32_t FASTCALL pixelp( PUNTOS P, void* colore ); /* DIBUJA UN PIXEL EL
 EXPORT void     FASTCALL triangulofillgrp( PUNTOS P[3], uint32_t colorA, uint32_t colorB, uint32_t colorC); /* DIBUJA UN TRIANGULO RELLENO GRADIENTE CON SUS COORDENADAS ESPECIFICADAS CON LA STRUCTURA PUNTOS. Y EL COLOR VA DESDE EL COLOR A, LUEGO YEGAR AL COLOR B, LUEGO YEGAR AL COLOR C Y VOLVER AL COLOR DE A, SE LO LLAMA GRADIENTE DE COLOR */
 EXPORT void     FASTCALL lineawgr( int x, int w, int y, uint32_t color1, uint32_t color2); /* DIBUJA UNA LÍNEA HORIZONTAL GRADIANTE DE 2 COLORES */
 EXPORT void     FASTCALL lineahgr( int x, int w, int y, uint32_t color1, uint32_t color2); /* DIBUJA UNA LÍNEA VERTICAL GRADIANTE DE 2 COLORES */
-EXPORT void     FASTCALL rectangulofillgr( int x, int y, int w, int h, uint32_t color1, uint32_t color2, uint32_t color3, uint32_t color4  ); /* DIBUJA UN RECTÁNGULO GRADIANTE CON 4 COLORES EN CADA ESQUINA */
+EXPORT void     FASTCALL rectangulogr( int x, int y, int w, int h, uint32_t color1, uint32_t color2, uint32_t color3, uint32_t color4 ); /* DIBUJA UN RECTÁNGULO HUECO GRADIANTE CON 4 COLORES EN CADA ESQUINA */
+EXPORT void     FASTCALL rectangulofillgr( int x, int y, int w, int h, uint32_t color1, uint32_t color2, uint32_t color3, uint32_t color4  ); /* DIBUJA UN RECTÁNGULO RELLENO GRADIANTE CON 4 COLORES EN CADA ESQUINA */
 
 /* INPUTS Y OUTPUTS */
 EXPORT int      FASTCALL anchov( void ); /* OBTIENE EL ANCHO DE LA VENTANA. */
