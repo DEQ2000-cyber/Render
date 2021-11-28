@@ -13,7 +13,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 8.11.0.
+    VERSION: Alpha 8.12.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -136,11 +136,15 @@
     [SE AGRAGO]: lineahgr : POR JTB
     [SE AGREGO]: rectangulofillgr : POR JTB
     [SE AGREGO]: copiarbufferimagen : POR DEQ
-    
-    VERSION Alpha 8.11.0
+
+    VERSION: Alpha 8.11.0
     [SE AGREGO]: pixelimagen : POR DEQ PEIDO POR JTB
     [SE AGREGO]: getpixelimagen : POR DEQ PEIDO POR JTB
     [SE AGREGO]: rectangulogr : POR DEQ
+
+    VERSION Alpha 8.12.0
+    [SE AGREGO]: pintarblur : POR DEQ
+    [SE AGREGO]: configimagen : POR DEQ
 
 */
 
@@ -283,12 +287,21 @@ enum __EFECTOS_IMAGEN__
 
 };
 
+enum __CONFIGURACION_IMAGEN__
+{
+    NOCENTRO    = 0,    NOCENTER   = 0,
+    CENTRO      = 1,    CENTER     = 1
+
+};
+
+
 
 
 
 /* Structura a IMAGEN */
 
 typedef struct tagIMAGEN{
+    _Bool CENTER; /* Activado o Desactivado del centro al dibujar la imagen. */
     uint32_t ID, /* ID de la imagen para usos del render y configuraciones aptas. */
         W,WS, /* Ancho iamgen, y ancho dividido en 2 para centro. */
         H,HS, /*  Alto iamgen, y alto  dividido en 2 para centro. */
@@ -318,13 +331,15 @@ EXPORT void       FASTCALL efectoimagen( unsigned int modo, IMAGEN *SPR ); /* IN
 EXPORT IMAGEN     FASTCALL copiarbufferimagen( IMAGEN *SPR ); /* RETORNA LA COPIA DEL BUFFER PASADO POR EL ARGUMENTO */
 EXPORT void       FASTCALL pixelimagen( int x, int y, uint32_t color, IMAGEN *SPR ); /* PINTA UN PIXEL EN COORDENADAS Y COLOR ESPECIFICADO USANDO RGB O RGBA DE LA IMAGEN */
 EXPORT uint32_t   FASTCALL getpixelimagen( int x, int y, IMAGEN *SPR ); /* OBTIENE EL COLOR DEL PIXEL EN LAS COORDENADAS ESPECIFICADAS. DE LA IMAGEN */
+EXPORT void       FASTCALL configimagen( int modo, IMAGEN *SPR ); /* CONFIGURaCIONES DE LA IMAGEN. USE EL ENUM __CONFIGURACION_IMAGEN__, CON LA IMAGEN ESPECIFICADA. */
 
 /* INICIOS */
 EXPORT int      FASTCALL loopinit( void ); /* DETECTA SI LA VENTANA/RENDER ESTA YA ACTIVADA */
-EXPORT int      FASTCALL iniciar( int,int,const char* ); /* INICIA LA VENTANA/RENDER */
-EXPORT void     FASTCALL pintar( int ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER */
+EXPORT int      FASTCALL iniciar( int ancho, int alto, const char* titulo ); /* INICIA LA VENTANA/RENDER */
+EXPORT void     FASTCALL pintar( int espera ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER */
 EXPORT void     FASTCALL salir( void ); /* CANCELA LA VENTANA ELIMINA BUFFER Y SALE DEL RENDER */
 EXPORT float    FASTCALL deltatime( void ); /* DEVUELVE EL VALOR DEL (RETARDO DEL DIBUJADO/DELTA TIME) */
+EXPORT void     FASTCALL pintarblur( int espera ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER CON EFECTO BLUR/DIFUMINAR */
 
 /* CONFIGURACIONES */
 EXPORT void     FASTCALL modoventana( int modo ); /* SETEA LA VENTANA EN MODOS DIFERENTES. USANDO DEL ENUM DE MODO_DE_VENTANA. */
