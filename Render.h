@@ -136,8 +136,8 @@
     [SE AGRAGO]: lineahgr : POR JTB
     [SE AGREGO]: rectangulofillgr : POR JTB
     [SE AGREGO]: copiarbufferimagen : POR DEQ
-
-    VERSION: Alpha 8.11.0
+    
+    VERSION Alpha 8.11.0
     [SE AGREGO]: pixelimagen : POR DEQ PEIDO POR JTB
     [SE AGREGO]: getpixelimagen : POR DEQ PEIDO POR JTB
     [SE AGREGO]: rectangulogr : POR DEQ
@@ -298,7 +298,6 @@ enum __CONFIGURACION_IMAGEN__
 
 
 
-
 /* Structura a IMAGEN */
 
 typedef struct tagIMAGEN{
@@ -335,10 +334,11 @@ EXPORT uint32_t   FASTCALL getpixelimagen( int x, int y, IMAGEN *SPR ); /* OBTIE
 EXPORT void       FASTCALL configimagen( int modo, IMAGEN *SPR ); /* CONFIGURaCIONES DE LA IMAGEN. USE EL ENUM __CONFIGURACION_IMAGEN__, CON LA IMAGEN ESPECIFICADA. */
 EXPORT void       FASTCALL crearbufferimagen( int w, int h, IMAGEN *SPR ); /* CREAR UNA IMAGEN MEDIANTE SU ANCHO Y ALTO ESPECIFICADOS. CON LA IMAGEN ESPECIFICADA. */
 
+
 /* INICIOS */
 EXPORT int      FASTCALL loopinit( void ); /* DETECTA SI LA VENTANA/RENDER ESTA YA ACTIVADA */
-EXPORT int      FASTCALL iniciar( int ancho, int alto, const char* titulo ); /* INICIA LA VENTANA/RENDER */
-EXPORT void     FASTCALL pintar( int espera ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER */
+EXPORT int      FASTCALL iniciar( int,int,const char* ); /* INICIA LA VENTANA/RENDER */
+EXPORT void     FASTCALL pintar( int ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER */
 EXPORT void     FASTCALL salir( void ); /* CANCELA LA VENTANA ELIMINA BUFFER Y SALE DEL RENDER */
 EXPORT float    FASTCALL deltatime( void ); /* DEVUELVE EL VALOR DEL (RETARDO DEL DIBUJADO/DELTA TIME) */
 EXPORT void     FASTCALL pintarblur( int espera ); /* LLAMA A PINTAR Y TIRA EL DIBUJO A LA VENTANA/BUFFER CON EFECTO BLUR/DIFUMINAR */
