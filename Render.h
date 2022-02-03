@@ -76,7 +76,7 @@
     [SE AGREGO]: SOLUCION DE FALLA DE FONDO AL PINTAR : POR DEQ PEDIDO POR JTB
 
     VERSION: Alpha 4.3.0:
-    [SE AGREGO]: modotimedelta : POR DEQ PEDIDO POR JTB
+    [SE AGREGO]: modotimedelta : POR DEQ PEDIDO POR JTB : ELIMINADO DE LA LISTA.
 
     VERSION: Alpha 4.4.0:
     [SE AGREGO]: poligon : POR DEQ
@@ -164,6 +164,7 @@
     [SE AGREGO]: linearcp : POR DEQ
     [SE AGREGO]: mouse : POR DEQ
     [SE AGREGO]: fps : POR DEQ
+    [SE CAMBIO]: modotimedelta : a modotitulo : POR DEQ
 
 
 */
@@ -231,9 +232,16 @@ typedef uint8_t     u8,     U8;
 typedef float       f32,    F32;
 
 
+enum MODO_DE_TITULO{
+    TITULO      =   2,
+    FPS         =   4
+};
+
+
 enum MODO_DE_CONSOLA{
     OCULTAR     =   2,
-    NOOCULTAR   =   4
+    NOOCULTAR   =   4,
+    MOSTRAR     =   4
 };
 
 enum MODO_DE_VENTANA{
@@ -282,11 +290,33 @@ typedef struct tagColorRGBA
 
 #ifndef __POINT2D__
 #define __POINT2D__
-/* Strutura a puntos 2D en floats */
+/* Strutura a puntos 2D en float's */
 typedef struct tagPUNTOS
 {
     float x,y;
 } PUNTOS;
+#endif
+
+
+
+#ifndef __POINTI2D__
+#define __POINTI2D__
+/* Strutura a puntos 2D en int's */
+typedef struct tagPUNTOSI
+{
+    int x,y;
+} PUNTOSI;
+#endif
+
+
+
+#ifndef __POINTD2D__
+#define __POINTD2D__
+/* Strutura a puntos 2D en double's */
+typedef struct tagPUNTOSD
+{
+    double x,y;
+} PUNTOSD;
 #endif
 
 
@@ -374,7 +404,7 @@ EXPORT void     FASTCALL pintarblur( int espera ); /* LLAMA A PINTAR Y TIRA EL D
 /* CONFIGURACIONES */
 EXPORT void     FASTCALL modoventana( int modo ); /* SETEA LA VENTANA EN MODOS DIFERENTES. USANDO DEL ENUM DE MODO_DE_VENTANA. */
 EXPORT void     FASTCALL modoconsola( int modo ); /* SETEA EL MODO DE VIZION DE LA CONSOLA CMD/SHEEL USANDO LAS ESPECIFICACIONES DEL ENUM DE MODO_DE_CONSOLA. USE EL FLAG -mwindows SI HAY PROBLEMAS CON LA FUNCIÓN */
-EXPORT void     FASTCALL modotimedelta( int modo ); /* SETEA EL MODO DE VIZION DEL TITULO VENTANA LAS ESPECIFICACIONES DEL ENUM DE MODO_DE_CONSOLA. */
+EXPORT void     FASTCALL modotitulo( int modo ); /* SETEA EL MODO DE VIZION DEL TITULO ED LA VENTANA. USANDO DEL ENUM DE MODO_DE_TITULO. */
 
 /* DIBUJADOS */
 EXPORT void     FASTCALL pixel( int x, int y, uint32_t color ); /* PINTA UN PIXEL EN COORDENADAS Y COLOR ESPECIFICADO USANDO RGB O RGBA */
