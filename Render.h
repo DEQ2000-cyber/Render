@@ -170,6 +170,8 @@
     [SE AGREGO]: asciitecla : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: tecla2 : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: mouserueda : POR DEQ PEDIDO POR JTB
+    [SE AGREGO]: triangulotextura : POR DEQ
+    [SE AGREGO]: triangulotexturap : POR DEQ
 
 
 */
@@ -228,13 +230,16 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifndef __TYPOS__
+#define __TYPOS__
 typedef uint16_t    u16,    U16;
 typedef uint32_t    u32,    U32;
 typedef int16_t     i16,    I16;
 typedef int32_t     i32,    I32;
-typedef int8_t      i8,     I8;
-typedef uint8_t     u8,     U8;
+typedef int8_t      i8,      I8;
+typedef uint8_t     u8,      U8;
 typedef float       f32,    F32;
+#endif
 
 
 enum MODO_DE_TITULO{
@@ -402,6 +407,8 @@ EXPORT void       FASTCALL pixelimagen( int x, int y, uint32_t color, IMAGEN *SP
 EXPORT uint32_t   FASTCALL getpixelimagen( int x, int y, IMAGEN *SPR ); /* OBTIENE EL COLOR DEL PIXEL EN LAS COORDENADAS ESPECIFICADAS. DE LA IMAGEN */
 EXPORT void       FASTCALL configimagen( int modo, IMAGEN *SPR ); /* CONFIGURaCIONES DE LA IMAGEN. USE EL ENUM __CONFIGURACION_IMAGEN__, CON LA IMAGEN ESPECIFICADA. */
 EXPORT void       FASTCALL crearbufferimagen( unsigned int w, unsigned int h, IMAGEN *SPR ); /* CREAR UNA IMAGEN MEDIANTE SU ANCHO Y ALTO ESPECIFICADOS. CON LA IMAGEN ESPECIFICADA. */
+EXPORT void       FASTCALL triangulotextura( int x0, int y0, int x1, int y1, int x2, int y2, int xt0, int yt0, int xt1, int yt1, int xt2, int yt2, IMAGEN *spr ); /* DIBUJA UN TRIANGULO TEXTURA USANDO LAS COORDENADAS ESPECIFICADAS Y LA IMAGEN A MAPEAR. */
+EXPORT void       FASTCALL triangulotexturap( PUNTOS P[3], PUNTOS TEX[3], IMAGEN *spr ); /* DIBUJA UN TRIANGULO TEXTURA USANDO LAS COORDENADAS ESPECIFICADAS CON PUNTOS Y LA IMAGEN A MAPEAR. */
 
 
 /* INICIOS */
