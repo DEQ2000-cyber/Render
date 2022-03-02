@@ -185,6 +185,8 @@
     [SE AGREGO]: desvanecerse : POR DEQ
     [SE AGREGO]: desvanecimiento : POR DEQ
     [SE AGREGO]: tinte : POR DEQ
+    [SE AGREGO]: lineaaliasing : POR DEQ
+    [SE AGREGO]: lineaaliasingp : POR DEQ
 */
 
 
