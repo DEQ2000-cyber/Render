@@ -187,6 +187,7 @@
     [SE AGREGO]: tinte : POR DEQ
     [SE AGREGO]: lineaaliasing : POR DEQ
     [SE AGREGO]: lineaaliasingp : POR DEQ
+    [SE AGREGO]: dropfichero : POR DEQ
 */
 
 
@@ -526,6 +527,7 @@ EXPORT void     FASTCALL submenupop( const char *nombre ); /* CREA UN SUBMENU-PO
 EXPORT void     FASTCALL submenusub( const char *nombre, DWORD id ); /* CREA UN SUBMENU-SUB CON IDENTIDAD LUEGO DE LAMAR. NO SE PUEDE CON: MENU, MENUID, MENUAGREGAR, MENUSEPARADOR A SUBMENU-POP. USE COMANDO O COMANDO2 PARA SABER SU SALIDA. */
 EXPORT void     FASTCALL menuseparador( void ); /* CREA UN SEPARADOR DE MENU'S. NO SE PUEDE CON: SUBMENU, SUBMENUSUB */
 EXPORT void     FASTCALL menumostrar( void ); /* MUESTRA EL MENU */
+EXPORT char *   FASTCALL dropfichero( void ); /* OBTIENE EL NOMBRE DEL ARCHIVO VOLCADO A LA VENTANA */
 
 #ifdef __cplusplus
     }
