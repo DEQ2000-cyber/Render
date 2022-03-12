@@ -12,7 +12,7 @@
     MOTOR probado en winer GNU/LINUX
 
 
-    VERSION: Alpha 9.14.0.
+    VERSION: Alpha 9.15.0.
     20:16 Argentina Daniel Efrain Quiroga
     06:20 Mexicam Andres Ruiz perez
     06:36 Colombia Jheison Toro Betancourth
@@ -136,18 +136,18 @@
     [SE AGREGO]: rectangulofillgr : POR JTB
     [SE AGREGO]: copiarbufferimagen : POR DEQ
     
-    VERSION Alpha 8.11.0
+    VERSION: Alpha 8.11.0
     [SE AGREGO]: pixelimagen : POR DEQ PEIDO POR JTB
     [SE AGREGO]: getpixelimagen : POR DEQ PEIDO POR JTB
     [SE AGREGO]: rectangulogr : POR DEQ
 
-    VERSION Alpha 8.12.0
+    VERSION: Alpha 8.12.0
     [SE AGREGO]: pintarblur : POR DEQ
     [SE AGREGO]: configimagen : POR DEQ
     [SE AGREGO]: crearbufferimagen : POR DEQ
     [SE AGREGO]: pmousexy : POR DEQ
 
-    VERSION Alpha 9.12.0
+    VERSION: Alpha 9.12.0
     [SE AGREGO]: rectangulocopiarbufferimagen : POR DEQ
     [SE AGREGO]: guardarimagen : POR DEQ
     [SE AGREGO]: lineap : POR DEQ
@@ -166,14 +166,14 @@
     [SE AGREGO]: fps : POR DEQ
     [SE CAMBIO]: modotimedelta : a modotitulo : POR DEQ
 
-    VERSION Alpha 9.13.0
+    VERSION: Alpha 9.13.0
     [SE AGREGO]: asciitecla : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: tecla2 : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: mouserueda : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: triangulotextura : POR DEQ
     [SE AGREGO]: triangulotexturap : POR DEQ
 
-    VERSION Alpha 9.14.0
+    VERSION: Alpha 9.14.0
     [SE AGREGO]: menu : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: menuagregar : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: menuid : POR DEQ PEDIDO POR JTB
@@ -191,6 +191,23 @@
     [SE AGREGO]: ClearDepthBuffer : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: pixeldepth : POR DEQ PEDIDO POR JTB
     [SE AGREGO]: getpixeldepth : POR DEQ PEDIDO POR JTB
+    [SE AGREGO]: PUNTOS3D : POR DEQ
+
+    VERSION: Alpha 9.15.0
+    [SE AGREGO]: VECTOR : POR DEQ
+    [SE AGREGO]: pixelfast : POR DEQ
+    [SE AGREGO]: pixelfast2 : POR DEQ
+    [SE AGREGO]: pixelfast3 : POR DEQ
+    [SE AGREGO]: random : POR DEQ
+    [SE AGREGO]: menutrack : POR DEQ
+    [SE AGREGO]: menutrackagregar : POR DEQ
+    [SE AGREGO]: menutrackid : POR DEQ
+    [SE AGREGO]: submenutrack : POR DEQ
+    [SE AGREGO]: submenutrackpop : POR DEQ
+    [SE AGREGO]: submenutracksub : POR DEQ
+    [SE AGREGO]: menutrackseparador : POR DEQ
+    [SE AGREGO]: menutrackmostrar : POR DEQ
+
 */
 
 
@@ -320,7 +337,8 @@ typedef struct tagColorRGBA
 /* Strutura a puntos 2D en float's */
 typedef struct tagPUNTOS
 {
-    float x,y;
+    float x;
+    float y;
 } PUNTOS;
 #endif
 
@@ -331,7 +349,8 @@ typedef struct tagPUNTOS
 /* Strutura a puntos 2D en float's */
 typedef struct tagPUNTOSF
 {
-    float x,y;
+    float x;
+    float y;
 } PUNTOSF;
 #endif
 
@@ -342,7 +361,8 @@ typedef struct tagPUNTOSF
 /* Strutura a puntos 2D en int's */
 typedef struct tagPUNTOSI
 {
-    int x,y;
+    int x;
+    int y;
 } PUNTOSI;
 #endif
 
@@ -353,11 +373,41 @@ typedef struct tagPUNTOSI
 /* Strutura a puntos 2D en double's */
 typedef struct tagPUNTOSD
 {
-    double x,y;
+    double x;
+    double y;
 } PUNTOSD;
 #endif
 
 
+
+
+#ifndef __POINT3D__
+#define __POINT3D__
+/* Structura de puntos 3D en float's */
+typedef struct tagPUNTOS3D
+{
+    float x;
+    float y;
+    float z;
+} *PPUNTOS3D,PUNTOS3D;
+#endif
+
+
+
+
+#ifndef __VERTICE__
+#define __VERTICE__
+/* Structura de vertice 3D-TEX en float's */
+typedef struct tagVERTICE
+{
+    float x;
+    float y;
+    float z;
+    float u;
+    float v;
+    float w;
+} VECTOR, VERTICE, *PVERTICE;
+#endif
 
 
 
@@ -379,7 +429,6 @@ enum __CONFIGURACION_IMAGEN__
 {
     NOCENTRO    = 0,    NOCENTER   = 0,
     CENTRO      = 1,    CENTER     = 1
-
 };
 
 
@@ -395,7 +444,6 @@ typedef struct tagIMAGEN{
         BPP;  /* El byte por separaciones del pixel de la imagen siempre 4, para usos del render y configuraciones aptas. */
     uint32_t *DATA; /* Datos del color de la imagen/pixeles */
 }IMAGEN,*PIMAGEN; /* Typos: 1) structura normal, 2) structura puntero */
-
 
 
 
@@ -483,6 +531,10 @@ EXPORT void     FASTCALL lineaaliasing( int x0, int y0, int x1, int y1, uint32_t
 EXPORT void     FASTCALL vaciardepthbuffer( void ); /* VACIA EL DEPTHBUFFER, LO EJA EN CEROS. */
 EXPORT void     FASTCALL pixeldepth( int x, int y, float depth, uint32_t color ); /* DIBUJA UN PIXEL SI EN SU POSICION EN EL DEPTHBUFFER HAY UN VALOR DE PROFUNDIDAD MAYOR AL SUYO, O IGUAL A CERO. */
 EXPORT double   FASTCALL getpixeldepth( int x, int y ); /* OBTIENE EL VALOR EN LA POSICION DEL DEPTHBUFFER. */
+EXPORT void     FASTCALL pixelfast( int x, int y, uint32_t color ); /* LO MISMO QUE PIXEL PERO CON DIFERENCIAS Y CUIDADOS AL TENER. */
+EXPORT void     FASTCALL pixelfast2( int x, int y, uint32_t color ); /* LO MISMO QUE PIXEL PERO CON DIFERENCIAS Y CUIDADOS AL TENER. */
+EXPORT void     FASTCALL pixelfast3( int x, int y, uint32_t color ); /* LO MISMO QUE PIXEL PERO CON DIFERENCIAS Y CUIDADOS AL TENER. */
+EXPORT int      FASTCALL random( int min, int max ); /* RETORNA UN NUMERO ENTERO RANDOM ENTRE LOS VALORES MINIMOS Y MAXIMOS */
 
 /* EXTRAS */
 EXPORT uint32_t FASTCALL pixelp( PUNTOS P, void* colore ); /* DIBUJA UN PIXEL EL COORDENADAS STRUCTURA PUNTOS ESPECIFICADAS. Y COLOR USANDO colorRGB O colorRGBA. SI EL COLOR ES NULL RETORNA EL COLOR EN LAS COORDENADAS ESPECIFICADAS. FUNCIONA COMO GETPIXEL */
@@ -502,6 +554,9 @@ EXPORT void     FASTCALL cuadriculap( PUNTOS a, uint32_t color ); /* DIBUJA UNA 
 EXPORT void     FASTCALL lineanormp( PUNTOS a[2], uint32_t color ); /* DIBUJA UNA LINEA NORMALIZADA POR VECTORES CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL linearcp( PUNTOS a[2], uint32_t color ); /* DIBUJA UNA LINEA MEDIANTE RECORTE CON SUS COORDENADAS ESPECIFICADAS. Y COLOR USANDO RGB O RGBA */
 EXPORT void     FASTCALL lineaaliasingp( PUNTOS a[2], uint32_t color ); /* DIBUJA UNA LINEA CON ALIASING. ESPECIFICANDO LAS CORDENADAS USANDO LA STRUCTURA PUNTOS Y COLOR USANDO RGB O RGBA */
+
+/* DEPTH - PROFUNDIDAD */
+/* Algoritmos en esperas */
 
 /* INPUTS Y OUTPUTS */
 EXPORT _Bool    FASTCALL tecla( char ); /* OBTIENE LAS TECLAS PRESIONADA */
@@ -534,6 +589,17 @@ EXPORT void     FASTCALL submenusub( const char *nombre, DWORD id ); /* CREA UN 
 EXPORT void     FASTCALL menuseparador( void ); /* CREA UN SEPARADOR DE MENU'S. NO SE PUEDE CON: SUBMENU, SUBMENUSUB */
 EXPORT void     FASTCALL menumostrar( void ); /* MUESTRA EL MENU */
 EXPORT char *   FASTCALL dropfichero( void ); /* OBTIENE EL NOMBRE DEL ARCHIVO VOLCADO A LA VENTANA */
+
+
+EXPORT void FASTCALL menutrack( LPCSTR nombre, UINT id );
+EXPORT void FASTCALL menutrackagregar( LPCSTR nombre);
+EXPORT void FASTCALL menutrackid( LPCSTR nombre, UINT id );
+EXPORT void FASTCALL submenutrack( LPCSTR nombre, UINT id );
+EXPORT void FASTCALL submenutrackpop( LPCSTR nombre );
+EXPORT void FASTCALL submenutracksub( LPCSTR nombre, UINT id );
+EXPORT void FASTCALL menutrackseparador( void );
+EXPORT void FASTCALL menutrackmostrar( void );
+
 
 #ifdef __cplusplus
     }
