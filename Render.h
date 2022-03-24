@@ -207,6 +207,10 @@
     [SE AGREGO]: submenutracksub : POR DEQ
     [SE AGREGO]: menutrackseparador : POR DEQ
     [SE AGREGO]: menutrackmostrar : POR DEQ
+    [SE AGREGO]: colortintar : POR DEQ
+    [SE AGREGO]: vertice2puntos : POR DEQ
+    [SE AGREGO]: polygonvertice : POR DEQ
+    [SE AGREGO]: polygonfillvertice : POR DEQ
 
 */
 
@@ -535,6 +539,11 @@ EXPORT void     FASTCALL pixelfast( int x, int y, uint32_t color ); /* LO MISMO 
 EXPORT void     FASTCALL pixelfast2( int x, int y, uint32_t color ); /* LO MISMO QUE PIXEL PERO CON DIFERENCIAS Y CUIDADOS AL TENER. */
 EXPORT void     FASTCALL pixelfast3( int x, int y, uint32_t color ); /* LO MISMO QUE PIXEL PERO CON DIFERENCIAS Y CUIDADOS AL TENER. */
 EXPORT int      FASTCALL random( int min, int max ); /* RETORNA UN NUMERO ENTERO RANDOM ENTRE LOS VALORES MINIMOS Y MAXIMOS */
+EXPORT uint32_t FASTCALL colortintar( uint32_t a, uint32_t b ); /* RETORNA UNA TINTURA/MANCHADOR DEL COLOR ESPECIFICADOS, B EDITARA A. */
+EXPORT void     FASTCALL vertice2puntos( int x, int y ); /* SETEA VERTICES EN PUNTOS 2D. */
+EXPORT void     FASTCALL borrarvertice( void ); /* BORRAR LOS VERTICES HECHOS CON vertice2puntos. */
+EXPORT void     FASTCALL polygonvertice( uint32_t color ); /* DIBUJA UN POLIGONO EN LAS COORDENADAS POR vertice2puntos, Y EL COLOR ESPECIFICADO CON RGB O RGBA. */
+EXPORT void     FASTCALL polygonfillvertice( uint32_t color ); /* DIBUJA UN POLIGONO RELLENO EN LAS COORDENADAS POR vertice2puntos, Y EL COLOR ESPECIFICADO CON RGB O RGBA. */
 
 /* EXTRAS */
 EXPORT uint32_t FASTCALL pixelp( PUNTOS P, void* colore ); /* DIBUJA UN PIXEL EL COORDENADAS STRUCTURA PUNTOS ESPECIFICADAS. Y COLOR USANDO colorRGB O colorRGBA. SI EL COLOR ES NULL RETORNA EL COLOR EN LAS COORDENADAS ESPECIFICADAS. FUNCIONA COMO GETPIXEL */
