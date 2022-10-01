@@ -212,12 +212,11 @@
     [SE AGREGO]: polygonvertice : POR DEQ
     [SE AGREGO]: polygonfillvertice : POR DEQ
 
+    VERSION: Alpha 9.16.0
+    [SE AGREGO]: establecercomando  : POR JTB
+    [SE AGREGO]: restablecercomando : POR JTB
+
 */
-
-
-
-
-
 
 
 /* Codigo de ejemplo */
@@ -238,8 +237,6 @@ int main(void){
 }
 
 */
-
-
 
 
 #ifdef __cplusplus
@@ -270,36 +267,43 @@ extern "C" {
 
 #ifndef __TYPOS__
 #define __TYPOS__
+typedef uint8_t     u8,      U8;
 typedef uint16_t    u16,    U16;
 typedef uint32_t    u32,    U32;
+
+typedef int8_t      i8,      I8;
 typedef int16_t     i16,    I16;
 typedef int32_t     i32,    I32;
-typedef int8_t      i8,      I8;
-typedef uint8_t     u8,      U8;
+
 typedef float       f32,    F32;
+
 #endif
 
 
-enum MODO_DE_TITULO{
+enum MODO_DE_TITULO
+{
     TITULO      =   2,
     FPS         =   4
 };
 
 
-enum MODO_DE_CONSOLA{
+enum MODO_DE_CONSOLA
+{
     OCULTAR     =   2,
     NOOCULTAR   =   4,
     MOSTRAR     =   4
 };
 
-enum MODO_DE_VENTANA{
+enum MODO_DE_VENTANA
+{
     MINIMIZADO  =   2,
     MAXIMIZADO  =   4,
     FULLSCREEN  =   8,
     OCULTO      =   16
 };
 
-enum MODO_DE_MOUSE{
+enum MODO_DE_MOUSE
+{
     SOSTENIDO   =   2,
     UNAVEZ      =   4
 };
@@ -311,15 +315,45 @@ enum MODO_FONDOIMG
     MOSAICO     =   4
 };
 
-
-
-
 #define RGBA(r,g,b,a)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(a) << 24) )
 #undef RGB
 #define RGB(r,g,b)((uint32_t)((uint16_t)(b) | ((uint16_t)(g) << 8) | ((uint16_t)(r) << 16)) | ((uint16_t)(255) << 24) )
 #define GetAValue(rgb) (LOBYTE((rgb)>>24))
 
+// Realiza una interpolación líneal entre 2 valores
+#define LERP( C1, C2, __lerp ) ( (((float)C1) * (1.0 - __lerp)) + (((float)C2) * __lerp) )
 
+// Empaqueta 2 bytes en una palabra o entero de 16 bits
+#define PACK_BYTES_WORD( B1, B2 )(\
+	(uint16_t)(\
+		((uint8_t)B1 << 0)|\
+		((uint8_t)B2 << 8)\
+	)\
+)
+
+// Empaqueta 4 bytes en una palabra o entero de 32 bits
+#define PACK_BYTES_DWORD( B1, B2, B3, B4 )(\
+	(uint32_t)(\
+		((uint8_t)B1 << 0)  |\
+		((uint8_t)B2 << 8)  |\
+		((uint8_t)B3 << 16) |\
+		((uint8_t)B4 << 24)\
+	)\
+)
+
+// Calcula la posición(offset) de un miembro en una estructura
+#define POSICIONDE( estructura, miembro ) ((uintptr_t)(&(((estructura*)0)->miembro)))
+#define OFFSETOF( struc, member ) POSICIONDE( struc, member ) // Alias en inglés
+
+// Valida el tamaño o alcance en bytes de una estructura
+#define VALIDAR_ALCANCE( estructura, alcance )\
+    static_assert( sizeof(estructura) == alcance,"El alcance esperado en bytes de la estructura " #estructura " es invalido" ) 
+#define VALIDATE_SIZE( struc, size ) VALIDAR_ALCANCE( struc, size ) // Alias en inglés
+
+// Valida la posición de un miembro de una estructura
+#define VALIDAR_POSICION( estructura, miembro, posicion ) \
+	static_assert(POSICIONDE(estructura, miembro) == posicion, "El offset del miembro " #miembro " en la estructura " #estructura " no es " #posicion "...")
+#define VALIDATE_OFFSET( struc, member, offset ) VALIDAR_POSICION( struc, member, posicion ) // Alias en inglés
 
 /* Strutura a color rgba separando los colores/canales en bytes */
 typedef union tagRGBA{
@@ -382,9 +416,6 @@ typedef struct tagPUNTOSD
 } PUNTOSD;
 #endif
 
-
-
-
 #ifndef __POINT3D__
 #define __POINT3D__
 /* Structura de puntos 3D en float's */
@@ -395,8 +426,6 @@ typedef struct tagPUNTOS3D
     float z;
 } *PPUNTOS3D,PUNTOS3D;
 #endif
-
-
 
 
 #ifndef __VERTICE__
@@ -434,8 +463,6 @@ enum __CONFIGURACION_IMAGEN__
     NOCENTRO    = 0,    NOCENTER   = 0,
     CENTRO      = 1,    CENTER     = 1
 };
-
-
 
 
 /* Structura a IMAGEN */
@@ -541,7 +568,6 @@ EXPORT void     FASTCALL pixelfast3( int x, int y, uint32_t color ); /* LO MISMO
 EXPORT int      FASTCALL random( int min, int max ); /* RETORNA UN NUMERO ENTERO RANDOM ENTRE LOS VALORES MINIMOS Y MAXIMOS */
 EXPORT uint32_t FASTCALL colortintar( uint32_t a, uint32_t b ); /* RETORNA UNA TINTURA/MANCHADOR DEL COLOR ESPECIFICADOS, B EDITARA A. */
 EXPORT void     FASTCALL vertice2puntos( int x, int y ); /* SETEA VERTICES EN PUNTOS 2D. */
-EXPORT void     FASTCALL borrarvertice( void ); /* BORRAR LOS VERTICES HECHOS CON vertice2puntos. */
 EXPORT void     FASTCALL polygonvertice( uint32_t color ); /* DIBUJA UN POLIGONO EN LAS COORDENADAS POR vertice2puntos, Y EL COLOR ESPECIFICADO CON RGB O RGBA. */
 EXPORT void     FASTCALL polygonfillvertice( uint32_t color ); /* DIBUJA UN POLIGONO RELLENO EN LAS COORDENADAS POR vertice2puntos, Y EL COLOR ESPECIFICADO CON RGB O RGBA. */
 
@@ -581,11 +607,13 @@ EXPORT _Bool    FASTCALL izquierdo( int mode ); /* OBTIENE LA PULSACION IZQUIERD
 EXPORT _Bool    FASTCALL derecho( int mode ); /* OBTIENE LA PULSACION DERECHO DEL MOUSE. SU MODO DE RESPUESTA USANDO LAS ESPECIFICACIONES DEL ENUM DE MODO_DE_MOUSE */
 EXPORT int      FASTCALL comandomenu( void ); /* OBTIENE EL COMANDO AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
 EXPORT _Bool    FASTCALL comandomenu2( int ids ); /* OBTIENE UNA UNICA VEZ AL PULSAR LOS BOTONES DEL COMANDO DE LA VENTANA */
+EXPORT void     FASTCALL establecercomando( int comando ); /* ESTABLECE EL COMANDO POR DEFECTO */
+EXPORT void     FASTCALL restablecercomando(); /* RESTABLECE AL COMANDO POR DEFECTO */
 EXPORT char*    FASTCALL abrirfichero( void ); /* OBTIENE UNA APERTURA HACIA LOS FICHEROS PARA ELEJIR Y RETORNA SU RUTA */
 EXPORT PUNTOS   FASTCALL pmousexy( void ); /* OBTIENE LAS COORDENADAS DEL MOUSE Y LO RETORNA EN UNA STRUCTURA PUNTOS. */
-EXPORT PUNTOSF   FASTCALL pfmousexy( void ); /* OBTIENE LAS COORDENADAS DEL MOUSE Y LO RETORNA EN UNA STRUCTURA PUNTOSF. */
-EXPORT PUNTOSI   FASTCALL pimousexy( void ); /* OBTIENE LAS COORDENADAS DEL MOUSE Y LO RETORNA EN UNA STRUCTURA PUNTOSI. */
-EXPORT PUNTOSD   FASTCALL pdmousexy( void ); /* OBTIENE LAS COORDENADAS DEL MOUSE Y LO RETORNA EN UNA STRUCTURA PUNTOSD. */
+EXPORT PUNTOSF  FASTCALL pfmousexy( void ); /* OBTIENE LAS COORDENADAS DEL MOUSE Y LO RETORNA EN UNA STRUCTURA PUNTOSF. */
+EXPORT PUNTOSI  FASTCALL pimousexy( void ); /* OBTIENE LAS COORDENADAS DEL MOUSE Y LO RETORNA EN UNA STRUCTURA PUNTOSI. */
+EXPORT PUNTOSD  FASTCALL pdmousexy( void ); /* OBTIENE LAS COORDENADAS DEL MOUSE Y LO RETORNA EN UNA STRUCTURA PUNTOSD. */
 #include <stdio.h>
 EXPORT FILE*    FASTCALL abrirficherof( const char ModoDeAperturaFile[] ); /* OBTIENE UNA APERTURA HACIA LOS ARCHIVOS PARA ELEJIR Y RETORNA UN PUNTERO FILE. SE PUEDE ELEJIR EL MODO DE APERTURA USANDOLOS DEFINES DE ARCHIVOMODE */
 EXPORT uint32_t FASTCALL RGBpicker( void ); /* OBTIENE EL ELEJIDO DE COLORES EN UNA VENTANA SEPARADA. RETORNA EL COLOR ELEJIDO */
@@ -598,7 +626,6 @@ EXPORT void     FASTCALL submenusub( const char *nombre, DWORD id ); /* CREA UN 
 EXPORT void     FASTCALL menuseparador( void ); /* CREA UN SEPARADOR DE MENU'S. NO SE PUEDE CON: SUBMENU, SUBMENUSUB */
 EXPORT void     FASTCALL menumostrar( void ); /* MUESTRA EL MENU */
 EXPORT char *   FASTCALL dropfichero( void ); /* OBTIENE EL NOMBRE DEL ARCHIVO VOLCADO A LA VENTANA */
-
 
 EXPORT void FASTCALL menutrack( LPCSTR nombre, UINT id );
 EXPORT void FASTCALL menutrackagregar( LPCSTR nombre);
